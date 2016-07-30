@@ -7,7 +7,7 @@ class FirstStep(luigi.Task):
     def requires(self):
         return []
     def output(self):
-        return luigi.LocalTarget('number_less_than_{}.txt'.format(self.max_value))
+        return luigi.LocalTarget('outputs/number_less_than_{}.txt'.format(self.max_value))
     def run(self):
         with self.output().open('w') as out_file:
             output = int(round(random.random() * self.max_value))
@@ -17,7 +17,7 @@ class SecondStep(luigi.Task):
     def requires(self):
         return [FirstStep(max_value=5)]
     def output(self):
-        return luigi.LocalTarget('random_number_squared.txt')
+        return luigi.LocalTarget('outputs/random_number_squared.txt')
     def run(self):
         with self.output().open('w') as out_file, self.input()[0].open() as in_file:
             value = int(in_file.read())
